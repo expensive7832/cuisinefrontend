@@ -1,0 +1,10 @@
+.receipt{
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    background:linear-gradient(45deg, #E12020, #FDE4E4), url(./../assets/images/motorgif.gif);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-blend-mode: darken;
+}
