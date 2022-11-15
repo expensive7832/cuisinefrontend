@@ -22,7 +22,7 @@ function UpdateFood() {
         e.preventDefault()
         const form = new FormData(e.currentTarget)
 
-        await axios.post(`http://localhost:5000/updatefood/${id}`, form)
+        await axios.post(`https://cuisinetreat-api.onrender.com/updatefood/${id}`, form)
         .then((res) => {
             if(res?.data?.message === "authorisation needed"){
                 alert(res?.data?.message)
