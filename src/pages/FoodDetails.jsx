@@ -35,13 +35,13 @@ const FoodDetails = () => {
    
 
   useEffect(() => {
-    axios.post(`/getFood/`)
+    axios.post(`https://cuisinetreat-api.onrender.com/getFood/`)
       .then((res) => setAllFoods(res?.data?.food))
       .catch((err) => console.log(err))
   }, [])
 
   useEffect(() => {
-    axios.post(`/getFoodDetails/${id}`)
+    axios.post(`https://cuisinetreat-api.onrender.com/getFoodDetails/${id}`)
       .then((res) => setProduct(res?.data?.food[0]))
       .catch((err) => console.log(err))
   }, [])
@@ -56,7 +56,7 @@ const FoodDetails = () => {
   const submitHandler = (e) => {
     e.preventDefault();
 
-    axios.post("/review", {
+    axios.post("https://cuisinetreat-api.onrender.com/review", {
       name: enteredName,
       email: enteredEmail,
       review: reviewMsg
@@ -77,7 +77,7 @@ const FoodDetails = () => {
   }, [product]);
 
   useEffect(() => {
-    axios.get("/review")
+    axios.get("https://cuisinetreat-api.onrender.com/review")
       .then((res) => setReviews(res.data.review))
       .catch((err) => console.log(err))
   }, []);
