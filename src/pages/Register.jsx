@@ -15,7 +15,7 @@ const Register = () => {
 
   const handleSubmit = async() => {
     setLoading(true)
-    await axios.post("/register", {fname, lname, email, pwd} )
+    await axios.post("https://cuisinetreat-api.onrender.com/register", {fname, lname, email, pwd} )
     .then((res) =>{
       if(res?.data?.message === "Input Field Cannot Be Empty"){
         setLoading(false)
