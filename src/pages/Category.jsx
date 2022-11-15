@@ -18,7 +18,7 @@ function Category() {
         setLoading(true)
         const form = new FormData(e.currentTarget)
 
-        await axios.post(`/category/${id}`, form)
+        await axios.post(`https://cuisinetreat-api.onrender.com/category/${id}`, form)
         .then((res) => {
             if(res?.data?.message === "authorisation needed"){
                 setLoading(false)
