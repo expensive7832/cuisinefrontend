@@ -5,7 +5,7 @@
     "node": "16.x.x"
   },
   "private": true,
-  "proxy": "https://cuisinetreat-api.onrender.com/",
+  "proxy": "https://cuisinetreat-api.onrender.com",
   "dependencies": {
     "@reduxjs/toolkit": "^1.6.2",
     "@testing-library/jest-dom": "^5.15.0",
