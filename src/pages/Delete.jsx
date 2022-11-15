@@ -18,7 +18,7 @@ async function Delete(){
     const dispatch = useDispatch()
 
       if(del){
-        await axios.post(`/delete/${id}`, {token})
+        await axios.post(`https://cuisinetreat-api.onrender.com/delete/${id}`, {token})
         .then((res) =>{
           if(res?.data?.message === 'delete successful'){
               dispatch(isLogout())
