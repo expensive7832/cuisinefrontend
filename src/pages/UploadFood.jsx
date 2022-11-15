@@ -12,7 +12,7 @@ function UploadFood() {
     const [cat, setCat] = useState([])
     const [loading, setLoading] = useState("Create")
     useEffect(() =>{
-    axios.get("/getCat")
+    axios.get("https://cuisinetreat-api.onrender.com/getCat")
     .then((res) => setCat(res?.data?.cat?.rows))
     }, [])
 
@@ -25,7 +25,7 @@ function UploadFood() {
         setLoading("Uploading...")
         const form = new FormData(e.currentTarget)
 
-        await axios.post(`/food/${id}`, form)
+        await axios.post(`https://cuisinetreat-api.onrender.com/food/${id}`, form)
         .then((res) => {
             if(res?.data?.message === "authorisation needed"){
                 swal("Authorization", res?.data?.message, "warning")
