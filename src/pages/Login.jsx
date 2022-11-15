@@ -30,7 +30,7 @@ const Login = () => {
 
   const submitHandler = async() =>{
     setLoading(true)
-    await axios.post("/login",{email: loginNameRef.current.value, pwd: loginPasswordRef.current.value},
+    await axios.post("https://cuisinetreat-api.onrender.com/login",{email: loginNameRef.current.value, pwd: loginPasswordRef.current.value},
     )
     .then((res) =>{
       if(res.data.message === "input field cannot be empty"){
