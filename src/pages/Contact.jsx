@@ -15,7 +15,7 @@ const Contact = () => {
   const [msg, setMsg] = useState("")
 
   const handleClick = async() =>{
-    await axios.post("/contact", {
+    await axios.post("https://cuisinetreat-api.onrender.com/contact", {
       name,
       msg,
       email,
