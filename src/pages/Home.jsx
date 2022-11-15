@@ -52,21 +52,21 @@ const Home = () => {
 
   useEffect(() => {
     if (filter === "ALL") {
-      axios.get("/getFoodHome")
+      axios.get("https://cuisinetreat.onrender.com/getFoodHome")
       .then((res) => setFood(res.data.food))
       .catch((err) => console.log(err))
     }
 
     if (filter === "LOW") {
      
-      axios.get("/foodLowPrice")
+      axios.get("https://cuisinetreat.onrender.com/foodLowPrice")
       .then((res) => setFood(res.data.food))
       .catch((err) => console.log(err))
     }
 
     if (filter === "High") {
      
-      axios.get("/foodHighPrice")
+      axios.get("https://cuisinetreat.onrender.com/foodHighPrice")
       .then((res) => setFood(res.data.food))
       .catch((err) => console.log(err))
     }
