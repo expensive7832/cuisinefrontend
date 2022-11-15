@@ -19,7 +19,7 @@ const AllFoods = () => {
 
   
 const handleSearch = async() => {
-  await axios?.post(`/getFoodSearch/`, {search: searchTerm})
+  await axios?.post(`https://cuisinetreat.onrender.com/getFoodSearch/`, {search: searchTerm})
   .then((res) => setFoods(res?.data?.food))
   .catch((err) => console.log(err))
 }
@@ -28,16 +28,16 @@ const handleSearch = async() => {
  
   useEffect(() => {
    if(options === "all"){
-    axios.get(`/getFood/`)
+    axios.get(`https://cuisinetreat.onrender.com/getFood/`)
     .then((res) => setFoods(res?.data?.food))
    
     .catch((err) => console.log(err))
    }else if(options === "low"){
-    axios.get(`/foodLowPrice/`)
+    axios.get(`https://cuisinetreat.onrender.com/foodLowPrice/`)
     .then((res) => setFoods(res?.data?.food))
     .catch((err) => console.log(err))
    }else if(options === "high"){
-    axios.get(`/foodHighPrice/`)
+    axios.get(`https://cuisinetreat.onrender.com/foodHighPrice/`)
     .then((res) => setFoods(res?.data?.food))
     .catch((err) => console.log(err))
    }
