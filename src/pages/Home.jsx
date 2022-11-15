@@ -77,13 +77,13 @@ const Home = () => {
   }, [filter, food]);
 
   useEffect(() =>{
-    axios.get("/getCat")
+    axios.get("https://cuisinetreat-api.onrender.com/getCat")
     .then((res) => setCat(res.data.cat.rows))
     .catch((err) => console.log(err))
   },[])
 
   useEffect(() =>{
-    axios.get("/getFoodHome")
+    axios.get("https://cuisinetreat-api.onrender.com/getFoodHome")
     .then((res) => setFood(res.data.food))
     .catch((err) => console.log(err))
   },[])
