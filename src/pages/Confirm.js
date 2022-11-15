@@ -19,7 +19,7 @@ function Confirm() {
   const dispatch = useDispatch()
   
   useEffect(() =>{
-    axios.post("/order", {
+    axios.post("https://cuisinetreat-api.onrender.com/order", {
       ...shippingInfo,
       email,
       amount: cartTotalAmount,
