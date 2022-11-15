@@ -24,7 +24,7 @@ const Update = () => {
 
   const handleSubmit = async() => {
     
-    await axios.post(`http://localhost:5000/update/${id}`,
+    await axios.post(`https://cuisinetreat-api.onrender.com/update/${id}`,
      {fname, lname, token})
     .then((res) =>{
       if(res?.data?.message === "update Successful"){
