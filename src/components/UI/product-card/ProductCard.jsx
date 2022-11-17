@@ -28,10 +28,10 @@ const ProductCard = ({item}) => {
 
       <div className="product__content">
         <h5>
-          <Link to={`/foods/${id}`}>{title}</Link>
+          <Link to={`/foods/₦{id}`}>{title}</Link>
         </h5>
         <div className=" d-flex align-items-center justify-content-between ">
-          <span className="product__price">${price}</span>
+          <span className="product__price">₦{price}</span>
           <button className="addTOCart__btn" onClick={addToCart}>
             Add to Cart
           </button>
