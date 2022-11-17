@@ -41,7 +41,7 @@ const Checkout = () => {
     reference: new Date().getTime().toString(),
     amount: cartTotalAmount * 100,
     publicKey: process.env.REACT_APP_PAYSTACK_PUBLIC_KEY,
-    email: "a@b.com",
+    email: userEmail,
   }
 
 
