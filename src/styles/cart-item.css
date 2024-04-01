@@ -1,11 +1,13 @@
 .cart__item-info img {
-  width: 35px;
-  height: 35px;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
   object-fit: cover;
 }
 
 .cart__product-title {
-  font-size: 0.8rem;
+  font-size: 1rem;
+  text-transform: capitalize;
   font-weight: 600;
 }
 

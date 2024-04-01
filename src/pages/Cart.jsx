@@ -42,14 +42,14 @@ const Cart = () => {
               <div className="mt-4">
                 <h6>
                   Subtotal: $
-                  <span className="cart__subtotal">{totalAmount}</span>
+                  <span className="cart__subtotal">{totalAmount.toFixed(2)}</span>
                 </h6>
                 <p>Taxes and shipping will calculate at checkout</p>
                 <div className="cart__page-btn">
-                  <button className="addTOCart__btn me-4">
+                  <button className="addTOCart__btn me-4 btn btn-md btn-danger ">
                     <Link to="/foods">Continue Shopping</Link>
                   </button>
-                  <button className="addTOCart__btn">
+                  <button className="addTOCart__btn  btn btn-md btn-danger ">
                     <Link to="/checkout">Proceed to checkout</Link>
                   </button>
                 </div>

@@ -17,38 +17,30 @@ const Checkout = () => {
 
   const cartTotalAmount = useSelector((state) => state?.cart?.totalAmount);
   const shippingInfo = useSelector((state) => state?.cart?.shippingInfo);
-  const userEmail = useSelector((state) => state?.user?.userData?.email)
+  const userEmail = useSelector((state) => state?.user?.userData?.email.trim())
 
 
+  
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
 
-
-
- const dispatch = useDispatch()
   const [enterName, setEnterName] = useState("");
   const [enterNumber, setEnterNumber] = useState("");
   const [enterCountry, setEnterCountry] = useState("");
   const [enterCity, setEnterCity] = useState("");
   const [street, setStreet] = useState("");
 
-
-  const navigate = useNavigate()
-
-  const totalAmount = cartTotalAmount ;
-
-  
-
   const config = {
     reference: new Date().getTime().toString(),
-    amount: cartTotalAmount * 100,
+    amount: parseInt(cartTotalAmount * 100),
     publicKey: process.env.REACT_APP_PAYSTACK_PUBLIC_KEY,
-    email: "a@b.com",
-  }
-
+    email: userEmail,
+ }
 
  const initializePayment = usePaystackPayment(config)  
 
-  const submitHandler = (e) => {
-    e.preventDefault();
+  const submitHandler = async(e) => {
+    e.preventDefault()
 
    const userShippingAddress = {
       name: enterName,
@@ -59,23 +51,22 @@ const Checkout = () => {
      
     };
 
-     
-
    
-      dispatch(shippingData(userShippingAddress))
-      
-
-      const onSuccess = (reference) =>{
+    
+    
+    
+    const onSuccess = (reference) =>{
+        dispatch(shippingData(userShippingAddress))
         dispatch(receiptData(reference))
         navigate("/confirm")
-      }
+    }
   
   
     const onClose = () => {
       swal("!!!",'oh!! that can be deliver in a jiffy', "info")
     }
 
-     initializePayment(onSuccess, onClose)
+   await initializePayment(onSuccess, onClose)
 
   };
 
@@ -135,7 +126,7 @@ const Checkout = () => {
                     onChange={(e) => setStreet(e.target.value)}
                   />
                 </div>
-                <button type="submit" className="addTOCart__btn btn btn-danger">
+                <button className="addTOCart__btn btn-md my-2 btn btn-danger">
                   Payment
                 </button>
               </form>
@@ -146,14 +137,14 @@ const Checkout = () => {
             <Col md="4">
               <div className="checkout__bill">
                 <h6 className="d-flex align-items-center justify-content-between mb-3">
-                  Subtotal: <span>${cartTotalAmount}</span>
+                  Subtotal: <span>${cartTotalAmount.toFixed(2)}</span>
                 </h6>
                 <h6 className="d-flex align-items-center justify-content-between mb-3">
-                  Shipping: <span>$0</span>
+                  Delivery: <span>$0</span>
                 </h6>
                 <div className="checkout__total">
                   <h5 className="d-flex align-items-center justify-content-between">
-                    Total: <span>${totalAmount}</span>
+                    Total: <span>${cartTotalAmount.toFixed(2)}</span>
                   </h5>
                 </div>
               </div>

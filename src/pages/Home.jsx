@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 import Helmet from "../components/Helmet/Helmet.js";
 import { Container, Row, Col, ListGroup, ListGroupItem } from "reactstrap";
@@ -48,45 +48,52 @@ const Home = () => {
 
 
 
-  
+
 
   useEffect(() => {
     if (filter === "ALL") {
-      axios.get("https://cuisinetreat-api.onrender.com/getFoodHome")
-      .then((res) => setFood(res.data.food))
-      .catch((err) => console.log(err))
+      axios.get(`${process.env.REACT_APP_API_URL}/getFoodHome`)
+        .then((res) => setFood(res.data.food))
+        .catch((err) => console.log(err))
     }
 
     if (filter === "LOW") {
-     
-      axios.get("https://cuisinetreat-api.onrender.com/foodLowPrice")
-      .then((res) => setFood(res.data.food))
-      .catch((err) => console.log(err))
+
+      axios.get(`${process.env.REACT_APP_API_URL}/foodLowPrice`)
+        .then((res) => setFood(res.data.food))
+        .catch((err) => console.log(err))
     }
 
     if (filter === "High") {
-     
-      axios.get("https://cuisinetreat-api.onrender.com/foodHighPrice")
-      .then((res) => setFood(res.data.food))
-      .catch((err) => console.log(err))
+
+      axios.get(`${process.env.REACT_APP_API_URL}/foodHighPrice`)
+        .then((res) => setFood(res.data.food))
+        .catch((err) => console.log(err))
     }
 
-   
 
-    
-  }, [filter, food]);
 
-  useEffect(() =>{
-    axios.get("https://cuisinetreat-api.onrender.com/getCat")
-    .then((res) => setCat(res.data.cat.rows))
-    .catch((err) => console.log(err))
-  },[])
 
-  useEffect(() =>{
-    axios.get("https://cuisinetreat-api.onrender.com/getFoodHome")
-    .then((res) => setFood(res.data.food))
-    .catch((err) => console.log(err))
-  },[])
+  }, [filter]);
+
+
+
+  const getCat = useCallback(() => {
+    axios.get(`${process.env.REACT_APP_API_URL}/getCat`)
+      .then((res) => setCat(res?.data?.cat?.rows))
+      .catch((err) => console.log(err))
+  }, [])
+
+  const getFoodHome = useCallback(() => {
+    axios.get(`${process.env.REACT_APP_API_URL}/getFoodHome`)
+      .then((res) => setFood(res?.data?.food))
+      .catch((err) => console.log(err))
+  }, [])
+
+
+  useEffect(() => getFoodHome(), [getFoodHome])
+  useEffect(() => getCat(), [getCat])
+
 
 
 
@@ -189,7 +196,7 @@ const Home = () => {
         </Container>
       </section>
 
-      <section>
+      <section >
         <Container>
           <Row>
             <Col lg="12" className="text-center">
@@ -199,31 +206,28 @@ const Home = () => {
             <Col lg="12">
               <div className="food__category d-flex align-items-center justify-content-center gap-4">
                 <button
-                  className={`all__btn  ${
-                    filter === "ALL" && "foodBtnActive" 
-                  } `}
+                  className={`all__btn  ${filter === "ALL" && "foodBtnActive"
+                    } `}
                   onClick={() => setFilter("ALL")}
                 >
                   All
                 </button>
 
                 <button
-                  className={`d-flex align-items-center gap-2 ${
-                    filter === "LOW" && "foodBtnActive"
-                  } `}
+                  className={`d-flex align-items-center gap-2 ${filter === "LOW" && "foodBtnActive"
+                    } `}
                   onClick={() => setFilter("LOW")}
                 >
-                 
+
                   LOW
                 </button>
 
                 <button
-                  className={`d-flex align-items-center gap-2 ${
-                    filter === "High" && "foodBtnActive"
-                  } `}
+                  className={`d-flex align-items-center gap-2 ${filter === "High" && "foodBtnActive"
+                    } `}
                   onClick={() => setFilter("High")}
                 >
-                 
+
                   High
                 </button>
 
@@ -297,7 +301,7 @@ const Home = () => {
         </Container>
       </section>
 
-     
+
 
       <section>
         <Container>

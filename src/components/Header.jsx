@@ -33,7 +33,7 @@ const Header = () => {
   const totalQuantity = useSelector((state) => state?.cart?.totalQuantity);
   const login = useSelector((state) => state?.user?.login);
   const id = useSelector((state) => state?.user?.userData?.id);
-  const admin = useSelector((state) => state?.user?.userData?.admin);
+  const role = useSelector((state) => state?.user?.userData?.role);
   const dispatch = useDispatch();
 
 
@@ -112,7 +112,7 @@ const Header = () => {
               <DropdownItem><Link to={`/delete/${id !== "" && id}`}>Delete Account</Link></DropdownItem>
 
               {
-                admin == true &&
+                role == true &&
                 
                 <>
                 <DropdownItem><Link to={`/category/${id}`}>Create category</Link></DropdownItem>

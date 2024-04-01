@@ -30,7 +30,7 @@ const Login = () => {
 
   const submitHandler = async() =>{
     setLoading(true)
-    await axios.post("https://cuisinetreat-api.onrender.com/login",{email: loginNameRef.current.value, pwd: loginPasswordRef.current.value},
+    await axios.post(`${process.env.REACT_APP_API_URL }/login`,{email: loginNameRef.current.value, pwd: loginPasswordRef.current.value},
     )
     .then((res) =>{
       if(res.data.message === "input field cannot be empty"){
@@ -77,18 +77,18 @@ const Login = () => {
                   />
                 </FormGroup>
                 
-                <FormGroup className="d-flex justify-content-between align-items-center">
+                <FormGroup className="d-flex position-relative  justify-content-between align-items-center">
                   <input
-                  className="form-control"
+                  className="form-control "
                     type="password"
                     placeholder="Password"
                    
                     ref={loginPasswordRef}
                   />
-                  <small style={{cursor: "pointer"}} className="text-primary fw-bold" onClick={() => handleShow()}>{showPwd}</small>
+                  <small style={{cursor: "pointer", right: "1rem"}} className="text-primary fw-bold position-absolute" onClick={() => handleShow()}>{showPwd}</small>
                 </FormGroup>
                 
-                <Button onClick={submitHandler} type="button" className="addTOCart__btn">
+                <Button onClick={submitHandler} type="button" className="addTOCart__btn w-100">
                  {loading ? "login you in now..." : "Login"}
                 </Button>
               </Form>

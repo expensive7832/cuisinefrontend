@@ -27,7 +27,7 @@ const cartSlice = createSlice({
         state.cartItems.push({
           id: newItem.id,
           title: newItem.title,
-          image01: newItem.imgs.imgUrls,
+          image01: newItem.imgurl,
           price: newItem.price,
           quantity: 1,
           totalPrice: newItem.price,
@@ -90,7 +90,7 @@ const cartSlice = createSlice({
       state.receiptInfo = action.payload
     }, 
     emptyCart(state, action){
-      state.cartItems = action.payload
+      state.cartItems = []
     }, 
     emptyQty(state, action){
       state.totalQuantity = 0

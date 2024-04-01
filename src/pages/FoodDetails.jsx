@@ -27,39 +27,45 @@ const FoodDetails = () => {
   const [product, setProduct] = useState({})
   const { title, price, cat, description, imgs } = product;
 
+ 
   const [previewImg, setPreviewImg] = useState(() => {
-    imgs && setPreviewImg(JSON.parse(imgs[0])?.imgUrls);
+    imgs && setPreviewImg(imgs[0]?.url);
   });
-  const relatedProduct = cat && allFoods?.filter((item) => cat[0] === item.cat[0]);
+  
+  const relatedProduct =  allFoods?.filter((item) => item.id != id);
 
-   
+ 
 
   useEffect(() => {
-    axios.post(`https://cuisinetreat-api.onrender.com/getFood/`)
+    axios.get(`${process.env.REACT_APP_API_URL}/getFood/`)
       .then((res) => setAllFoods(res?.data?.food))
       .catch((err) => console.log(err))
   }, [])
 
   useEffect(() => {
-    axios.post(`https://cuisinetreat-api.onrender.com/getFoodDetails/${id}`)
-      .then((res) => setProduct(res?.data?.food[0]))
+    axios.get(`${process.env.REACT_APP_API_URL}/getFoodDetails/${id}`)
+      .then((res) => setProduct(res?.data?.food))
       .catch((err) => console.log(err))
-  }, [])
+  }, [id])
 
 
 
   const addToCart = () => {
+    
     dispatch(
       addItem({ ...product, imgs: previewImg })
-    )}
+    )
+  
+  }
 
   const submitHandler = (e) => {
     e.preventDefault();
 
-    axios.post("https://cuisinetreat-api.onrender.com/review", {
+    axios.post(`${process.env.REACT_APP_API_URL}/review`, {
       name: enteredName,
       email: enteredEmail,
-      review: reviewMsg
+      review: reviewMsg,
+      foodId: id
     }).then((res) => {
       if (res?.data?.msg === "review submitted") {
         swal("Good Job",res?.data?.msg, "success")
@@ -69,7 +75,7 @@ const FoodDetails = () => {
   };
 
   useEffect(() => {
-    imgs && setPreviewImg(JSON.parse(imgs[0])?.imgUrls);
+    imgs && setPreviewImg(imgs[0]?.url);
   }, [product]);
 
   useEffect(() => {
@@ -77,7 +83,7 @@ const FoodDetails = () => {
   }, [product]);
 
   useEffect(() => {
-    axios.get("https://cuisinetreat-api.onrender.com/review")
+    axios.get(`${process.env.REACT_APP_API_URL}/review/${id}`)
       .then((res) => setReviews(res.data.review))
       .catch((err) => console.log(err))
   }, []);
@@ -99,9 +105,9 @@ const FoodDetails = () => {
                 {imgs?.map((img, i) => (
                   <div key={i}
                     className="img__item mb-3"
-                    onClick={() => setPreviewImg(JSON.parse(img)?.imgUrls)}
+                    onClick={() => setPreviewImg(img?.url)}
                   >
-                    <img src={JSON.parse(img)?.imgUrls} alt={title} className="w-50" />
+                    <img src={img?.url} alt={title} className="w-50" />
 
                   </div>
                 ))}

@@ -1,7 +1,6 @@
 import React, { useLayoutEffect, useState } from "react";
 import Helmet from "../components/Helmet/Helmet";
 import CommonSection from "../components/UI/common-section/CommonSection";
-import { Container, Row, Col, Button } from "reactstrap";
 import ProductCard from "../components/UI/product-card/ProductCard";
 import ReactPaginate from "react-paginate";
 import "../styles/all-foods.css";
@@ -19,7 +18,7 @@ const AllFoods = () => {
 
   
 const handleSearch = async() => {
-  await axios?.post(`https://cuisinetreat-api.onrender.com/getFoodSearch/`, {search: searchTerm})
+  await axios?.get(`${process.env.REACT_APP_API_URL}/getFoodSearch/?search=${searchTerm}`)
   .then((res) => setFoods(res?.data?.food))
   .catch((err) => console.log(err))
 }
@@ -28,16 +27,17 @@ const handleSearch = async() => {
  
   useEffect(() => {
    if(options === "all"){
-    axios.get(`https://cuisinetreat-api.onrender.com/getFood/`)
+    axios.get(`${process.env.REACT_APP_API_URL}/getFood/`)
     .then((res) => setFoods(res?.data?.food))
    
     .catch((err) => console.log(err))
    }else if(options === "low"){
-    axios.get(`https://cuisinetreat-api.onrender.com/foodLowPrice/`)
+    axios.get(`${process.env.REACT_APP_API_URL}/foodLowPrice/`)
     .then((res) => setFoods(res?.data?.food))
     .catch((err) => console.log(err))
+
    }else if(options === "high"){
-    axios.get(`https://cuisinetreat-api.onrender.com/foodHighPrice/`)
+    axios.get(`${process.env.REACT_APP_API_URL}/foodHighPrice/`)
     .then((res) => setFoods(res?.data?.food))
     .catch((err) => console.log(err))
    }
@@ -49,9 +49,9 @@ const handleSearch = async() => {
       <CommonSection title="All Foods" />
 
       <section>
-        <Container>
-          <Row>
-            <Col lg="6" md="6" sm="6" xs="12">
+        <div className="container">
+          <div className="align-items-center m-auto row justify-content-center justify-content-md-start  ">
+            <div className="col-md-6">
               <div className="search__widget d-flex align-items-center justify-content-between ">
                 <input
                   type="text"
@@ -64,8 +64,8 @@ const handleSearch = async() => {
                   <i class="ri-search-line" onClick={handleSearch}></i>
                 </span>
               </div>
-            </Col>
-            <Col lg="6" md="6" sm="6" xs="12" className="mb-5">
+            </div>
+            <div className="mb-5  col-md-6">
               <div className="sorting__widget text-end">
                 <select className="w-50" value={options} onChange={(e) => setOptions(e.target.value)}>
                   <option value="all">Default</option>
@@ -73,12 +73,12 @@ const handleSearch = async() => {
                   <option value="low">Low Price</option>
                 </select>
               </div>
-            </Col>
+            </div>
 
             {foodCount !== 0 ?foods?.slice(0, foodCount)?.map((item) => (
-              <Col lg="3" md="4" sm="6" xs="6" key={item.id} className="mb-4">
+              <div key={item.id} className="mb-4 pb-md-5 col-lg-3 col-md-4">
                 <ProductCard item={item} />
-              </Col>
+              </div>
             )) :
             <h1>No Food</h1>
             }
@@ -88,8 +88,8 @@ const handleSearch = async() => {
               <button className="btn btn-md btn-danger" onClick={() => setFoodCount(foodCount + 1)}>LoadMore</button>
             </div>
            
-          </Row>
-        </Container>
+          </div>
+        </div>
       </section>
     </Helmet>
   );

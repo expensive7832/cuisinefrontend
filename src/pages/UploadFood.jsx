@@ -9,11 +9,14 @@ import swal from 'sweetalert'
 
 function UploadFood() {
 
-    const [cat, setCat] = useState([])
+    const [cat, setCat] = useState(null)
     const [loading, setLoading] = useState("Create")
+
     useEffect(() =>{
-    axios.get("https://cuisinetreat-api.onrender.com/getCat")
+    axios.get(`${process.env.REACT_APP_API_URL}/getCat`)
     .then((res) => setCat(res?.data?.cat?.rows))
+    .catch((err) => console.log(err))
+
     }, [])
 
     const { id } = useParams()
@@ -25,21 +28,21 @@ function UploadFood() {
         setLoading("Uploading...")
         const form = new FormData(e.currentTarget)
 
-        await axios.post(`https://cuisinetreat-api.onrender.com/food/${id}`, form)
+        await axios.post(`${process.env.REACT_APP_API_URL}/food/${id}`, form)
         .then((res) => {
-            if(res?.data?.message === "authorisation needed"){
-                swal("Authorization", res?.data?.message, "warning")
-                navigate("/login")
-            }else if(res?.data?.message === "food created"){
-                setLoading("Create")
-                swal("Good Job", res?.data?.message, "success");
-                navigate("/")
-            }else if(res?.data?.message === "error"){
-                swal("Try Again","Title Already Exists, Try Other Name", "warning");
-                setLoading("Try Again")
-            }
+            setLoading("Create")
+            swal("Good", res.data.message, "success")
+            navigate("/")
+
         })
-        .catch((err) => console.log(err))
+        .catch((err) => {
+            for(let i in err?.response?.data){
+                swal("error", err.response.data[i], "error")
+            }
+
+            setLoading("Create")
+
+        })
     }
 
 
@@ -61,7 +64,7 @@ function UploadFood() {
 
                         <div className='my-3'>
                         <Label className='fw-bold'>Price</Label> 
-                        <input type="number" name='price' className='form-control' />
+                        <input type="text" name='price' className='form-control' />
                         </div>
 
                         <div className='my-3'>

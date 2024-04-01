@@ -23,8 +23,8 @@ const Update = () => {
  
 
   const handleSubmit = async() => {
-    
-    await axios.post(`https://cuisinetreat-api.onrender.com/update/${id}`,
+    setLoading(true)
+    await axios.patch(`${process.env.REACT_APP_API_URL }/update/${id}`,
      {fname, lname, token})
     .then((res) =>{
       if(res?.data?.message === "update Successful"){
@@ -67,7 +67,7 @@ const Update = () => {
                
                 
                 
-                <Button onClick={handleSubmit} color="info" type="button" >
+                <Button onClick={handleSubmit} color="info" className="w-100" type="button" >
                  {loading ? "updating..." : "update"}
                 </Button>
               </form>

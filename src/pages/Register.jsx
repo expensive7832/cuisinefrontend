@@ -15,7 +15,7 @@ const Register = () => {
 
   const handleSubmit = async() => {
     setLoading(true)
-    await axios.post("https://cuisinetreat-api.onrender.com/register", {fname, lname, email, pwd} )
+    await axios.post(`${process.env.REACT_APP_API_URL }/register`, {fname, lname, email, pwd} )
     .then((res) =>{
       if(res?.data?.message === "Input Field Cannot Be Empty"){
         setLoading(false)
@@ -87,7 +87,7 @@ const Register = () => {
                 </FormGroup>
                 
                 
-                <Button onClick={handleSubmit} color="primary" type="button" >
+                <Button className="w-100 " onClick={handleSubmit} color="primary" type="button" >
                  {loading ? "Sign You Up Now..." : "Sign Up"}
                 </Button>
               </form>

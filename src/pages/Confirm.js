@@ -1,8 +1,10 @@
 import axios from 'axios'
-import React from 'react'
+import React, { useCallback } from 'react'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import swal from 'sweetalert';
+import loadingImg from "./../assets/images/loading.gif"
 
 
 function Confirm() {
@@ -19,24 +21,33 @@ function Confirm() {
   const dispatch = useDispatch()
   
   useEffect(() =>{
-    axios.post("https://cuisinetreat-api.onrender.com/order", {
+
+
+
+    axios.post(`${process.env.REACT_APP_API_URL}/order`, {
       ...shippingInfo,
       email,
       amount: cartTotalAmount,
       ref
     })
     .then((res) =>{
-      if(res?.data?.message === "empty field"){
-        navigate("/foods");
-
-      }else if(res?.data?.message === "order save"){
-       navigate("/receipt")
+      navigate("/receipt") 
+    })
+    .catch((err) =>{
+      for(let i in err?.response?.data){
+        swal("error", err?.response?.data[i], "error")
       }
     })
-  }, [shippingInfo, ref])
+
+  } , [])
 
   return (
-   <></>
+   <div className="d-flex justify-content-center min-vh-100 align-items-center">
+
+
+    <img src={loadingImg} className="img-fluid" style={{width: "5rem", height: "5rem"}} alt="loading receipt" />
+
+   </div>
   )
 }
 

@@ -9,31 +9,34 @@ import categoryImg01 from "../../../assets/images/category-01.png";
 import categoryImg02 from "../../../assets/images/category-02.png";
 import categoryImg03 from "../../../assets/images/category-03.png";
 import categoryImg04 from "../../../assets/images/category-04.png";
+import categoryrep from "../../../assets/images/categoryrep.png";
 
 import "../../../styles/category.css";
+import swal from "sweetalert";
 
 
 
 const Category = ({data}) => {
 
-  const admin = useSelector((state) => state?.user?.userData?.admin);
+  const role = useSelector((state) => state?.user?.userData?.role);
   const id = useSelector((state) => state?.user?.userData?.id);
 
   const navigate = useNavigate()
 
   const handleClick = async(item) =>{
 
-   await axios.post(`/deleteCat/${id}`, item)
+   await axios.delete(`${process.env.REACT_APP_API_URL}/deleteCat/?userid=${id}&itemid=${item?.id}&imgid=${item?.imgid}`)
    .then((res) => {
-     if(res.data.message === "authorisation needed"){
-       alert(res.data.message)
-     }else if(res.data.message === "Category Deleted"){
-       alert(res.data.message)
-     }else if(res.data.message === "error"){
-       alert(res.data.message)
-     }
+    swal("Done", res?.data?.message, "success")
+    window.location.reload()
    })
-   navigate("/")
+   .catch((err) => {
+
+    for(let i in err.response.data){
+      swal("error",err?.response?.data[i], "error")
+    }
+
+   })
   }
 
   return (
@@ -41,14 +44,22 @@ const Category = ({data}) => {
       <Row>
         {data.map((item, index) => (
           <Col md="3" sm="6" xs="6" className="mb-4" key={index}>
-            <div className="category__item d-flex justify-content-between align-items-center gap-3">
+            <div className="category__item d-flex justify-content-between align-items-center gap-1">
               <div className="category__img">
-                <img src={item.img} alt="category photo" />
+                {item?.img === null ? 
+                <img src={categoryrep} alt="category representation"/>
+                
+                :
+
+                <img src={item?.img} alt="category photo" />
+
+                }
               </div>
+              
               <h6>{item.title}</h6>
               
 
-              {Boolean(admin) === true &&
+              {role === true &&
               <i class="ri-delete-bin-2-fill" style={{ fontSize: "2rem", color:"#a40000"}} onClick={() => handleClick(item)}></i>
               }
             </div>
