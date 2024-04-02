@@ -20,6 +20,7 @@ const Cat = React.lazy(() => import("./pages/Category"))
 const UploadFood = React.lazy(() => import("./pages/UploadFood"))
 const Confirm = React.lazy(() => import("./pages/Confirm"))
 const Receipt = React.lazy(() => import("./pages/Receipt"))
+const NotFound = React.lazy(() => import("./pages/NotFound"))
 
 
 const App = () => {
@@ -32,8 +33,7 @@ const App = () => {
     { showCart && <Carts/>}
 
     <Routes>
-      <Route path="/" element={<Navigate to="/home" />} />
-      <Route path="/home" element={<Home />} />
+      <Route path="/" element={<Home />} />
       <Route path="/foods" element={<AllFoods />} />
       <Route path="/foods/:id" element={<FoodDetails />} />
       <Route path="/cart" element={<Cart />} />
@@ -47,6 +47,7 @@ const App = () => {
       <Route path="/delete/:id" element={<Delete />} />
       <Route path="/category/:id" element={<Cat />} />
       <Route path="/food/:id" element={<UploadFood />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
 
    

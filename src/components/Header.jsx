@@ -72,7 +72,7 @@ const Header = () => {
     <header className="header" ref={headerRef}>
       <Container>
         <div className="nav__wrapper d-flex align-items-center justify-content-between">
-          <Link to="/home" className="logo">
+          <Link to="/" className="logo">
             <img src={logo} alt="logo" />
             <h5>Tasty Treat</h5>
           </Link>
